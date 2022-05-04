@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool comp(pair<int,int> a, pair<int,int> b)
+{
+    return a.second > b.second;
+}
+
+int jobsequencing(vector<pair<int,int>> job, int n)
+{
+    vector<bool> empty(n,true);
+    vector<int> place(n,0);
+
+    int max_profit = 0;
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j = min(n,job[i].first);j>=0;j--)
+        {
+            if(empty[j])
+            {
+                empty[j] = false;
+                place[j] = job[i].second;
+                max_profit += place[j];
+                break;
+            }
+        }
+    }
+    // for(int i=1;i<=n;i++)
+    // {
+    //     cout<<place[i]<<" ";
+    // }
+    cout<<endl;
+    return max_profit;
+}
+
+int takeinput()
+{
+    int n;
+    cin>>n;
+
+    vector<pair<int,int>> job;
+    for(int i=0; i<n; i++)
+    {
+        int dead,profit;
+        cin>>dead>>profit;
+        job.push_back(make_pair(dead,profit));
+    }
+
+    sort(job.begin(), job.end(),comp);
+
+    return jobsequencing(job,n);
+}
+
+int main()
+{
+    int val = takeinput();
+    cout<<val<<endl;
+return 0;
+}
